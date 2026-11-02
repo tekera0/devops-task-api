@@ -15,7 +15,8 @@ public class TodoController {
         // Add a default task so the list isn't empty
         todos.add(new Todo(currentId++, "Complete DevOps Assignment", false));
     }
-
+         // added comment simply
+         
     @GetMapping
     public List<Todo> getTodos() {
         return todos;
