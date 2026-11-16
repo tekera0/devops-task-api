@@ -1,0 +1,24 @@
+---
+- name: Configure application server
+  hosts: appservers
+  vars:
+    app_port: 8080
+    app_dir: /tmp/devops-demo
+  roles:
+    - roles/common
+  tasks:
+    - name: Ensure application directory exists
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+
+    - name: Copy application JAR to server
+      copy:
+        src: ../target/demo-0.0.1-SNAPSHOT.jar
+        dest: "{{ app_dir }}/demo-0.0.1-SNAPSHOT.jar"
+      notify: restart app
+
+  handlers:
+    - name: restart app
+      debug:
+        msg: "Simulating systemd service restart for devops-demo on port {{ app_port }}"
